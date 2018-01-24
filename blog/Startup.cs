@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using blog.Data;
+using blog.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +25,9 @@ namespace blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDbContext<BloggingContext>(options =>
+                options.UseSqlite("Filename=./blog.db"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
