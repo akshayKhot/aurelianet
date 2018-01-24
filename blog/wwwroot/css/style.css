@@ -43,3 +43,18 @@ article {
     color: #000;
 }
 
+.name {
+    font-size: 1.2em;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.details {
+    padding: 10px;
+}
+
+.email {
+    font-style: italic;
+    padding: 10px;
+    font-size: 0.8em;
+}
