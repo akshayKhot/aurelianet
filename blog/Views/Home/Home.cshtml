@@ -1,41 +1,20 @@
-﻿<div id='wrap'>
+﻿@using System.Collections.Generic
+<div id='wrap'>
 
     <header>Scielosophy</header>
     <div class="posts">
-        <article>
-            <div class="title"> 
-                <a href="post.html">The Scientific Method</a>
-            </div>
-            <div class="date">Tuesday, January 23, 2018</div>
-            <div class="content">
-                <p>
-                    It is hardly surprising that there are more things in heaven and earth, than have been dreamed of in our philosophy or in our physics. A physicist is only too happy when he finds a conflict of this kind between successful theories, it's an extraordinary opportunity. It is an opportunity to revise the hypothesis, test it, and form new conclusions; discarding the old ones. 
-                </p>
-                <p>
-                    This is in stark contrast to the common human tendency to form conclusions, opinions and judgements, and then rationalizing to justify them. One should follow the scientific method to form a hypothesis based on objective observations, test the hypothesis, and form a conclusion. Even this is not sufficient, one needs to revise and retest the existing hypothesis/mental models as new facts emerge and the world around us changes, instead of clinging to them.
-                </p>
-            </div>
-            <div class="labels">physics</div>
-        </article>
-        <article>
-            <div class="title">Probability Theory</div>
-            <div class="date">Monday, January 22, 2018</div>
-            <div class="content">
-                <p>Probability is simply expressing how likely something is to happen. Whenever we are uncertain about an event, we can talk about probabilities, how likely they are. It gives a good estimate of the event. If we flip a coin, the probability of getting either heads or tales is 0.5, unless the coin is biased. </p>
-                <p>Probability is a useful mental model in decision making. It helps us to avoid foolish decisions like buying a lottery ticket, by simply calculating the probability of winning vs. losing. It can also improve one's judgement, if used correctly and objectively. One needs to be careful of biased coins, i.e. errors of judgement and irrationality, while taking probability into account. 
-                    </p>
-                <p>According to Nassim Taleb, "Probability is not a mere computation of odds on the dice or more complicated variants; it is the acceptance of the lack of certainty in our knowledge and the development of methods for dealing with our ignorance. Outside of textbooks and casinos, probability almost never presents itself as a mathematical problem or a brain teaser. In the real world, one has to guess the problem more than the solution."</p>
-            </div>
-            <div class="labels">mathematics, philosophy</div>
-        </article>
-        <article>
-            <div class="title">Worst Case Performance</div>
-            <div class="date">Sunday, January 21, 2018</div>
-            <div class="content">
-                <p>In theoretical computer science, there are techniques that enable us to compare the efficiency and complexity of the algorithms without implementing them. This is referred to as asymptotic analysis, which helps us find out the worst case complexity of an algorithm. This is commonly represented using Big-Oh notation.</p>
-                <p>The advantage of knowing worst-case performance is it helps us know our limits. If we know how we perform under worst conditions, we might be better prepared. It might also prove a good heuristic when hiring or decision making, for example, choosing the option which will do significantly better in the worst conditions. The key insight is to prevent crashing under worst conditions or black swan events.  </p>
-            </div>
-            <div class="labels">mathematics, statistics</div>
-        </article>
+        
+        @foreach (var post in ViewData["Posts"] as IEnumerable<blog.Models.Post>)
+        {
+            <article>
+                <div class="title">@post.Title</div>
+                <div class="date">Sunday, January 21, 2018</div>
+                <div class="content">
+                    <p>@post.Content</p>
+                </div>
+                <div class="labels">@post.Labels</div>
+            </article>
+        }
     </div>
-   </div>
+
+ </div>
