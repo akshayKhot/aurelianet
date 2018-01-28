@@ -1,0 +1,16 @@
+<template>
+  <div class="container wrap">
+    
+    <div class="row">
+      <div class="col-3">
+        <h1>${heading}</h1>
+        <ul repeat.for="nav of router.navigation">
+          <li class="${nav.isActive ? 'active' : ''}"><a href.bind="nav.href">${nav.title}</a></li>
+        </ul>
+      </div>
+      <div class="col-9 main-site">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
+</template>

@@ -18,11 +18,52 @@ namespace blog.Controllers
         {
             _context = context;
         }
+        
+        [Route("/posts")]
         public IActionResult Home()
         {
             var posts = _context.Posts.ToList();
-            ViewData["Posts"] = posts;
-            return View();
+            return Json(posts);
+        }
+        
+        [Route("/about")]
+        public IActionResult About()
+        {
+            var author = _context.Authors.Single(auth => auth.ID == 1);
+            return Json(author);
+        }
+        
+        [HttpPost("/posts/add")]
+        public IActionResult AddPost([FromBody] NewPost post)
+        {
+            var author = _context.Authors.Single(auth => auth.ID == 1);
+            var postToAdd = new Post
+            {
+                Title = post.Title,
+                Content = post.Content,
+                Labels = "unassigned",
+                Author = author
+            };
+            _context.Posts.Add(postToAdd);
+            _context.SaveChanges();
+            return Json(post);
+        }
+        
+        [HttpPost("/posts/delete/{id}")]
+        public IActionResult DeletePost(int id)
+        {
+            var post = _context.Posts.Single(p => p.ID == id);
+            
+            _context.Posts.Remove(post);
+            _context.SaveChanges();
+            return Content("success");
         }
     }
+
+    public class NewPost
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+    }
+    
 }

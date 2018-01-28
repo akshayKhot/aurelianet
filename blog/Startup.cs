@@ -24,6 +24,7 @@ namespace blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
             services.AddDbContext<BloggingContext>(options =>
                 options.UseSqlite("Filename=./blog.db"));
@@ -41,15 +42,14 @@ namespace blog
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+            );
 
-            app.UseStaticFiles();
+            app.UseFileServer();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Home}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

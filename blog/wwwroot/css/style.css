@@ -1,60 +1,32 @@
-body {
-    background-color: #ea0;
+h1 {
+    color: green;
 }
 
-#wrap {
-    width: 500px;
-    margin: 0 auto;
+.wrap {
+    width: 700px;
+}
+
+.posts, .about {
     padding: 10px;
-    background-color: aliceblue;
-    font-family: Helvetica, sans-serif;
-    line-height: 1.2em;
-}
-
-header {
-    font-size: 2em;
-    text-align: center;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-article {
-    margin-top: 10px;
-}
-
-.title {
-    font-size: 1.5em;
-}
-
-.date {
-    font-size: 0.8em;
-    margin-top: 5px;
 }
 
 .labels {
     font-style: italic;
-    font-size: small;
-    margin-bottom: 15px;
-    color: navy;
 }
 
-.title a {
-    text-decoration: none;
-    color: #000;
+article {
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
-.name {
-    font-size: 1.2em;
-    padding: 10px;
-    margin-bottom: 15px;
+button {
+    margin-top: 10px;
 }
 
-.details {
-    padding: 10px;
+textarea {
+    height: 300px;
 }
 
-.email {
-    font-style: italic;
-    padding: 10px;
-    font-size: 0.8em;
+.main-site {
+    margin-top: 50px;
 }
