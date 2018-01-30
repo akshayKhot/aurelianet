@@ -11,9 +11,10 @@ export class App {
             instruction.config.href = instruction.fragment
         };
         config.map([
-          { route: ['', 'home'],       name: 'home',  moduleId: 'home', nav: true, title: 'Home'},
-          { route: 'about',            name: 'about', moduleId: 'about', nav: true, title: 'About' },
-          { route: 'add',            name: 'add', moduleId: 'add', nav: true, title: 'Add' }
+          { route: ['', 'home'],       name: 'home',   moduleId: 'home', nav: true, title: 'Home'},
+          { route: 'about',            name: 'about',  moduleId: 'about', nav: true, title: 'About' },
+          { route: 'add',              name: 'add',    moduleId: 'add', nav: true, title: 'Add' },
+          { route: 'update',           name: 'update', moduleId: 'update', title: 'Update' }
         ]);
     }
 }

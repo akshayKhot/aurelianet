@@ -26,6 +26,13 @@ namespace blog.Controllers
             return Json(posts);
         }
         
+        [Route("/posts/{id}")]
+        public IActionResult GetPost(int id)
+        {
+            var post = _context.Posts.SingleOrDefault(p => p.ID == id);
+            return Json(post);
+        }
+        
         [Route("/about")]
         public IActionResult About()
         {
@@ -45,6 +52,16 @@ namespace blog.Controllers
                 Author = author
             };
             _context.Posts.Add(postToAdd);
+            _context.SaveChanges();
+            return Json(post);
+        }
+        
+        [HttpPost("/posts/update/{id}")]
+        public IActionResult UpdatePost(int id, [FromBody] NewPost post)
+        {
+            var postToUpdate = _context.Posts.FirstOrDefault(p => p.ID == id);
+            postToUpdate.Title = post.Title;
+            postToUpdate.Content = post.Content;
             _context.SaveChanges();
             return Json(post);
         }

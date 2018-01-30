@@ -1,8 +1,15 @@
+import {Router} from 'aurelia-router';
+
 export class Add {
   
-    constructor() {
+    constructor(router) {
       this.title = "";
       this.post = "";
+      this.router = router;
+    }
+
+    static inject() {
+        return [Router];
     }
     
     addPost() {
@@ -14,8 +21,8 @@ export class Add {
                 content: this.post
             }),
             contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                console.log(data);
+            success: data => {
+                this.router.navigateToRoute('home');
             },
             dataType: 'json'
         });

@@ -1,12 +1,16 @@
 <template>
-  <h class="posts">
+  <div class="posts">
     <article repeat.for="post of posts">
       <h3>${post.title}</h3>
         <div class="content">
             <p>${post.content}</p>
         </div>
-        <div><button type="button" class="btn btn-danger" click.trigger="deletePost(post)">Delete</button></div>
-        <div class="labels">${post.labels}</div>
+      
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger" click.trigger="deletePost(post)">Delete</button>
+        <button type="button" class="btn btn-warning" click.trigger="updatePost(post)">Update</button>
+      </div>
+      <div class="labels">${post.labels}</div>
     </article>
   </div>
 </template>

@@ -1,0 +1,11 @@
+<template>
+
+  <form>
+    <div class="form-group">
+      <input type="text" class="form-control" id="titleInput" placeholder="Title" value.bind="post.title">
+    </div>
+    <label for="contentArea">Post</label>
+    <textarea class="form-control" id="contentArea" rows="3" value.bind="post.content"></textarea>
+    <button type="button" class="btn btn-primary" click.trigger="updatePost(post)">Update</button>
+  </form>
+</template>
