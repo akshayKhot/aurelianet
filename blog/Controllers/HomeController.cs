@@ -12,75 +12,56 @@ namespace blog.Controllers
 {
     public class HomeController : Controller
     {
-        private BloggingContext _context { get; set; }
+        private BloggingContext _context { get; set;  }
+        private IRepository _repository { get; set;  }
 
-        public HomeController(BloggingContext context)
+        public HomeController(BloggingContext context, IRepository repo)
         {
             _context = context;
+            _repository = repo;
         }
         
         [Route("/posts")]
-        public IActionResult Home()
+        public IActionResult GetAllPosts()
         {
-            var posts = _context.Posts.ToList();
+            var posts = _repository.GetAllPosts();
             return Json(posts);
         }
         
         [Route("/posts/{id}")]
-        public IActionResult GetPost(int id)
+        public IActionResult GetPostById(int id)
         {
-            var post = _context.Posts.SingleOrDefault(p => p.ID == id);
+            var post = _repository.GetPostById(id);
             return Json(post);
         }
         
         [Route("/about")]
-        public IActionResult About()
+        public IActionResult GetAuthor()
         {
-            var author = _context.Authors.Single(auth => auth.ID == 1);
+            var author = _repository.GetAuthorById(1);
             return Json(author);
         }
         
         [HttpPost("/posts/add")]
-        public IActionResult AddPost([FromBody] NewPost post)
+        public IActionResult AddPost([FromBody] Post post)
         {
-            var author = _context.Authors.Single(auth => auth.ID == 1);
-            var postToAdd = new Post
-            {
-                Title = post.Title,
-                Content = post.Content,
-                Labels = "unassigned",
-                Author = author
-            };
-            _context.Posts.Add(postToAdd);
-            _context.SaveChanges();
+            _repository.AddPost(post);
             return Json(post);
         }
         
         [HttpPost("/posts/update/{id}")]
-        public IActionResult UpdatePost(int id, [FromBody] NewPost post)
+        public IActionResult UpdatePost(int id, [FromBody] Post post)
         {
-            var postToUpdate = _context.Posts.FirstOrDefault(p => p.ID == id);
-            postToUpdate.Title = post.Title;
-            postToUpdate.Content = post.Content;
-            _context.SaveChanges();
-            return Json(post);
+            var updatedPost = _repository.UpdatePost(id, post);
+            return Json(updatedPost);
         }
         
         [HttpPost("/posts/delete/{id}")]
         public IActionResult DeletePost(int id)
         {
-            var post = _context.Posts.Single(p => p.ID == id);
-            
-            _context.Posts.Remove(post);
-            _context.SaveChanges();
+            _repository.DeletePost(id);
             return Content("success");
         }
-    }
-
-    public class NewPost
-    {
-        public string Title { get; set; }
-        public string Content { get; set; }
     }
     
 }

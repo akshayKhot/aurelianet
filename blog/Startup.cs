@@ -28,6 +28,7 @@ namespace blog
             services.AddMvc();
             services.AddDbContext<BloggingContext>(options =>
                 options.UseSqlite("Filename=./blog.db"));
+            services.AddScoped<IRepository, DataRepository>();
 
         }
 
