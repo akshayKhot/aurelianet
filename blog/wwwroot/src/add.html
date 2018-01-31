@@ -2,9 +2,9 @@
 
   <form>
       <div class="form-group">
-        <input type="text" class="form-control" id="titleInput" placeholder="Title" value.bind="title">
+        <input type="text" class="form-control" id="titleInput" placeholder="Title" value.bind="post.title">
       </div>
-      <textarea class="form-control" id="contentArea" rows="3" value.bind="post" placeholder="Post"></textarea>
+      <textarea class="form-control" id="contentArea" rows="3" value.bind="post.content" placeholder="Post"></textarea>
       <button type="button" class="btn btn-primary" click.trigger="addPost()">Post</button>
   </form>
 </template>

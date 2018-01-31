@@ -1,4 +1,5 @@
 import {Router} from 'aurelia-router';
+import {BlogService} from "./Services/blog-service";
 
 export class update {
     
@@ -6,37 +7,24 @@ export class update {
         this.getPostToUpdate(params.id);
     }
     
-    constructor(router) {
-        this.post = {};
+    constructor(router, blogService) {
         this.router = router;
+        this.blogService = blogService;
     }
 
     static inject() {
-        return [Router];
+        return [Router, BlogService];
     }
     
     getPostToUpdate(id) {
-        $.ajax({
-            url: `http://localhost:5000/posts/${id}`,
-            method: "GET"
-        }).done(data => {
-            this.post = data;
+        this.blogService.getPost(id).then(post => {
+            this.post = post;
         });
     }
     
-    updatePost(post) {
-        $.ajax({
-            type: "POST",
-            url: `http://localhost:5000/posts/update/${post.id}`,
-            data: JSON.stringify({
-                title: this.post.title,
-                content: this.post.content
-            }),
-            contentType: "application/json; charset=utf-8",
-            success: data => {
-                this.router.navigateToRoute('home');
-            },
-            dataType: 'json'
+    updatePost() {
+        this.blogService.updatePost(this.post).then(() => {
+            this.router.navigateToRoute('home');
         });
     }
     

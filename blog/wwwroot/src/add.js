@@ -1,30 +1,24 @@
 import {Router} from 'aurelia-router';
+import {BlogService} from "./Services/blog-service";
 
 export class Add {
   
-    constructor(router) {
-      this.title = "";
-      this.post = "";
+    constructor(router, blogService) {
+      this.post = {
+          title: "",
+          content: ""
+      };
       this.router = router;
+      this.blogService = blogService;
     }
 
     static inject() {
-        return [Router];
+        return [Router, BlogService];
     }
     
     addPost() {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:5000/posts/add",
-            data: JSON.stringify({
-                title: this.title,
-                content: this.post
-            }),
-            contentType: "application/json; charset=utf-8",
-            success: data => {
-                this.router.navigateToRoute('home');
-            },
-            dataType: 'json'
+        this.blogService.addPost(this.post).then(() => {
+            this.router.navigateToRoute('home');
         });
     }
 }

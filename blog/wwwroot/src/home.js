@@ -1,9 +1,11 @@
 import {Router} from 'aurelia-router';
+import {BlogService} from "./Services/blog-service";
 
 export class home {
     
-    constructor(router) {
+    constructor(router, blogService) {
         this.router = router;
+        this.blogService = blogService;
     }
     
     activate() {
@@ -11,29 +13,19 @@ export class home {
     }
     
     static inject() {
-        return [Router];
+        return [Router, BlogService];
     }
     
     deletePost(post) {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:5000/posts/delete/" + post.id,
-            success: data => {
-                console.log(data);
-                if (data === "success") {
-                    this.getPosts();
-                }
-            },
-            dataType: 'text'
+        this.blogService.deletePost(post).then(() => {
+            this.getPosts();
         });
     }
     
     getPosts() {
-        $.ajax({
-            url: "http://localhost:5000/posts",
-            method: "GET"
-        }).done(data => {
-            this.posts = data;});
+        this.blogService.getPosts().then(posts => {
+            this.posts = posts;
+        });
     }
     
     updatePost(post) {
