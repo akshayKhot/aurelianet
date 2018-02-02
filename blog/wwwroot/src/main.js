@@ -1,7 +1,6 @@
 export function configure(aurelia) {
   aurelia.use
-    .standardConfiguration()
-    .feature('resources');
+    .standardConfiguration();
   
   aurelia.start().then(() => aurelia.setRoot());
 }
