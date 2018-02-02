@@ -31,3 +31,7 @@ h1 a {
     text-decoration: none !important;
     color: green;
 }
+
+.author {
+    padding: 5px;
+}
