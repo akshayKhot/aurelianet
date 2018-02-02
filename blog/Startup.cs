@@ -26,8 +26,8 @@ namespace blog
         {
             services.AddCors();
             services.AddMvc();
-            services.AddDbContext<BloggingContext>(options =>
-                options.UseSqlite("Filename=./blog.db"));
+            var connectionString = Configuration.GetConnectionString("BloggingContext");
+            services.AddEntityFrameworkNpgsql().AddDbContext<BloggingContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IRepository, DataRepository>();
 
         }

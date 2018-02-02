@@ -21,7 +21,7 @@ namespace blog.Data
             {
                 Title = post.Title,
                 Content = post.Content,
-                Labels = "unassigned",
+                //LabelId = 0,
                 Author = author
             };
             _context.Posts.Add(postToAdd);
