@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using blog.Data;
 using Microsoft.AspNetCore.Mvc;
 using blog.Models;
+using blog.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace blog.Controllers
@@ -21,47 +22,90 @@ namespace blog.Controllers
             _repository = repo;
         }
         
-        [Route("/posts")]
+        // Create
+        [HttpPost("/posts")]
+        public IActionResult AddPost([FromBody] JsonPost post)
+        {
+            _repository.AddPost(post);
+            return Json(post);
+        }
+        
+        [HttpPost("/authors")]
+        public IActionResult AddAuthor([FromBody] JsonAuthor author)
+        {
+            _repository.AddAuthor(author);
+            return Json(author);
+        }
+        
+        // Read
+        [HttpGet("/posts")]
         public IActionResult GetAllPosts()
         {
             var posts = _repository.GetAllPosts();
             return Json(posts);
         }
         
-        [Route("/posts/{id}")]
+        [HttpGet("/authors")]
+        public IActionResult GetAllAuthors()
+        {
+            var authors = _repository.GetAllAuthors();
+            return Json(authors);
+        }
+        
+        [HttpGet("/posts/{id}")]
         public IActionResult GetPostById(int id)
         {
             var post = _repository.GetPostById(id);
             return Json(post);
         }
         
-        [Route("/about")]
-        public IActionResult GetAuthor()
+        [HttpGet("/authors/{id}")]
+        public IActionResult GetAuthorById(int id)
         {
-            var author = _repository.GetAuthorById(1);
+            var author = _repository.GetAuthorById(id);
             return Json(author);
         }
         
-        [HttpPost("/posts/add")]
-        public IActionResult AddPost([FromBody] Post post)
+        [HttpGet("/posts/auth/{id}")]
+        public IActionResult GetAllPostsForAuthor(int id)
         {
-            _repository.AddPost(post);
-            return Json(post);
+            var postsForAuthor = _repository.GetAllPostsForAuthor(id);
+            return Json(postsForAuthor);
         }
         
-        [HttpPost("/posts/update/{id}")]
-        public IActionResult UpdatePost(int id, [FromBody] Post post)
+        
+        // Update
+        [HttpPut("/posts")]
+        public IActionResult UpdatePost([FromBody] JsonPost post)
         {
-            var updatedPost = _repository.UpdatePost(id, post);
-            return Json(updatedPost);
+            _repository.UpdatePost(post);
+            return Content("success");
         }
         
-        [HttpPost("/posts/delete/{id}")]
+        [HttpPut("/authors")]
+        public IActionResult UpdateAuthor([FromBody] JsonAuthor author)
+        {
+            _repository.UpdateAuthor(author);
+            return Content("success");
+        }
+        
+        // Delete
+        [HttpDelete("/posts/{id}")]
         public IActionResult DeletePost(int id)
         {
             _repository.DeletePost(id);
             return Content("success");
         }
+        
+        [HttpDelete("/authors/{id}")]
+        public IActionResult DeleteAuthor(int id)
+        {
+            _repository.DeleteAuthor(id);
+            return Content("success");
+        }
+        
+        
+        
     }
     
 }

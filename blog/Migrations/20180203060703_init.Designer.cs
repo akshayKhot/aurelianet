@@ -11,7 +11,7 @@ using System;
 namespace blog.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20180202205632_init")]
+    [Migration("20180203060703_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace blog.Migrations
 
             modelBuilder.Entity("blog.Models.Author", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Details");
@@ -32,26 +32,14 @@ namespace blog.Migrations
 
                     b.Property<string>("Name");
 
-                    b.HasKey("ID");
+                    b.HasKey("AuthorId");
 
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("blog.Models.Label", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Labels");
-                });
-
             modelBuilder.Entity("blog.Models.Post", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AuthorId");
@@ -60,24 +48,11 @@ namespace blog.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("ID");
+                    b.HasKey("PostId");
 
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("blog.Models.PostLabel", b =>
-                {
-                    b.Property<int>("PostId");
-
-                    b.Property<int>("LabelId");
-
-                    b.HasKey("PostId", "LabelId");
-
-                    b.HasIndex("LabelId");
-
-                    b.ToTable("PostLabel");
                 });
 
             modelBuilder.Entity("blog.Models.Post", b =>
@@ -85,19 +60,6 @@ namespace blog.Migrations
                     b.HasOne("blog.Models.Author", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("blog.Models.PostLabel", b =>
-                {
-                    b.HasOne("blog.Models.Label", "Label")
-                        .WithMany("PostLabels")
-                        .HasForeignKey("LabelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("blog.Models.Post", "Post")
-                        .WithMany("PostLabels")
-                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

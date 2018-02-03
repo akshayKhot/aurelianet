@@ -6,7 +6,8 @@ export class Add {
     constructor(router, blogService) {
       this.post = {
           title: "",
-          content: ""
+          content: "",
+          authorId: 1
       };
       this.router = router;
       this.blogService = blogService;

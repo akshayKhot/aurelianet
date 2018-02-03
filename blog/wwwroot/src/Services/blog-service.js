@@ -3,12 +3,9 @@ export class BlogService {
 
     addPost(post) {
         return $.ajax({
-            type: "POST",
+            method: "POST",
             url: "http://localhost:5000/posts/add",
-            data: JSON.stringify({
-                title: post.title,
-                content: post.content
-            }),
+            data: JSON.stringify(post),
             contentType: "application/json; charset=utf-8",
             success: () => {},
             dataType: 'json'
@@ -35,12 +32,9 @@ export class BlogService {
 
     updatePost(post) {
         return $.ajax({
-            type: "POST",
+            method: "PUT",
             url: `http://localhost:5000/posts/update/${post.id}`,
-            data: JSON.stringify({
-                title: post.title,
-                content: post.content
-            }),
+            data: JSON.stringify(post),
             contentType: "application/json; charset=utf-8",
             success: data => {},
             dataType: 'json'

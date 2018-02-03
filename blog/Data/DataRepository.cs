@@ -2,6 +2,8 @@
 using System.Linq;
 using blog.Controllers;
 using blog.Models;
+using blog.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace blog.Data
 {
@@ -14,37 +16,34 @@ namespace blog.Data
             _context = context;
         }
         
-        public void AddPost(Post post)
+        // Create
+        public void AddPost(JsonPost post)
         {
-            var author = _context.Authors.Single(auth => auth.ID == 1);
+            var author = _context.Authors
+                                 .Include(auth => auth.Posts)
+                                 .FirstOrDefault(auth => auth.AuthorId == post.AuthorId);
             var postToAdd = new Post
             {
                 Title = post.Title,
-                Content = post.Content,
-                //LabelId = 0,
-                Author = author
+                Content = post.Content
             };
-            _context.Posts.Add(postToAdd);
+            author.Posts.Add(postToAdd);
             _context.SaveChanges();
         }
 
-        public void AddAuthor(Author author)
+        public void AddAuthor(JsonAuthor author)
         {
-            throw new System.NotImplementedException();
+            var authorToAdd = new Author
+            {
+                Name = author.Name,
+                Email = author.Email,
+                Details = author.Details
+            };
+            _context.Authors.Add(authorToAdd);
+            _context.SaveChanges();
         }
-
-        public Author GetAuthorById(int id)
-        {
-            var author = _context.Authors.Single(auth => auth.ID == id);
-            return author;
-        }
-
-        public Post GetPostById(int id)
-        {
-            var post = _context.Posts.SingleOrDefault(p => p.ID == id);
-            return post;
-        }
-
+        
+        // Read
         public IEnumerable<Post> GetAllPosts()
         {
             var posts = _context.Posts.ToList();
@@ -53,34 +52,67 @@ namespace blog.Data
 
         public IEnumerable<Author> GetAllAuthors()
         {
-            throw new System.NotImplementedException();
+            var authors = _context.Authors.Include(auth => auth.Posts).ToList();
+            return authors;
+        }
+        
+        public Post GetPostById(int id)
+        {
+            var post = _context.Posts.SingleOrDefault(p => p.PostId == id);
+            return post;
+        }
+        
+        public Author GetAuthorById(int id)
+        {
+            var author = _context.Authors.Single(auth => auth.AuthorId == id);
+            return author;
         }
 
-        public Author UpdateAuthor(Author author)
+        public IEnumerable<Post> GetAllPostsForAuthor(int id)
         {
-            throw new System.NotImplementedException();
+            var author = _context.Authors
+                                 .Include(auth => auth.Posts)
+                                 .FirstOrDefault(auth => auth.AuthorId == id);
+            var posts = author.Posts.ToList();
+            return posts;
         }
 
-        public Post UpdatePost(int id, Post post)
+    
+        // Update
+        public void UpdatePost(JsonPost post)
         {
-            var postToUpdate = _context.Posts.FirstOrDefault(p => p.ID == id);
+            var postToUpdate = _context.Posts.FirstOrDefault(p => p.PostId == post.Id);
             postToUpdate.Title = post.Title;
             postToUpdate.Content = post.Content;
             _context.SaveChanges();
-            return postToUpdate;
         }
-
-        public void DeleteAuthor(Author author)
+        
+        public void UpdateAuthor(JsonAuthor author)
         {
-            throw new System.NotImplementedException();
+            var authorToUpdate = _context.Authors.FirstOrDefault(auth => auth.AuthorId == author.Id);
+            authorToUpdate.Name = author.Name;
+            authorToUpdate.Email = author.Email;
+            authorToUpdate.Details = author.Details;
+            _context.SaveChanges();
         }
 
+        
+        // Delete
         public void DeletePost(int id)
         {
-            var postToDelete = _context.Posts.Single(p => p.ID == id);
+            var postToDelete = _context.Posts.SingleOrDefault(p => p.PostId == id);
             
             _context.Posts.Remove(postToDelete);
             _context.SaveChanges();
         }
+        
+        public void DeleteAuthor(int id)
+        {
+            var authorToDelete = _context.Authors.SingleOrDefault(auth => auth.AuthorId == id);
+            
+            _context.Authors.Remove(authorToDelete);
+            _context.SaveChanges();
+        }
+
     }
 }

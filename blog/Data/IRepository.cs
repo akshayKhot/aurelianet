@@ -1,27 +1,29 @@
 ﻿using System.Collections.Generic;
 using blog.Controllers;
 using blog.Models;
+using blog.ViewModels;
 
 namespace blog.Data
 {
     public interface IRepository
     {
         // Create
-        void AddPost(Post post);
-        void AddAuthor(Author author);
+        void AddPost(JsonPost post);
+        void AddAuthor(JsonAuthor author);
         
         // Read
-        Author GetAuthorById(int id);
-        Post GetPostById(int id);
         IEnumerable<Post> GetAllPosts();
         IEnumerable<Author> GetAllAuthors();
+        Post GetPostById(int id);
+        Author GetAuthorById(int id);
+        IEnumerable<Post> GetAllPostsForAuthor(int id);
         
         // Update
-        Author UpdateAuthor(Author author);
-        Post UpdatePost(int id, Post post);
+        void UpdatePost(JsonPost post);
+        void UpdateAuthor(JsonAuthor author);
 
         // Delete
-        void DeleteAuthor(Author author);
         void DeletePost(int id);
+        void DeleteAuthor(int id);
     }
 }

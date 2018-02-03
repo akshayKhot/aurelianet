@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using blog.Models;
 
 namespace blog.Data
@@ -20,37 +21,26 @@ namespace blog.Data
                 {
                     Name = "Akshay Khot",
                     Email = "akshay.7277@gmail.com",
-                    Details = "I am a software developer based in Victoria, BC. I love reading, writing and learning."
+                    Details = "I am a software developer based in Victoria, BC. I love reading, writing and learning.",
+                    Posts = new List<Post>
+                    {
+                        new Post { Title = "Hello World", Content = "Akshay's First post. Let's see how this goes."},
+                        new Post { Title = "Another Post", Content = "This blog focuses on Science."}
+                    }
                 },
                 new Author
                 {
                     Name = "Amey Dalvi",
                     Email = "amey@gmail.com",
-                    Details = "I am an Architect."
+                    Details = "I am an Architect.",
+                    Posts = new List<Post>
+                    {
+                        new Post { Title = "Architecture", Content = "This is an architectural blog. "}
+                    }
                 }
             };
 
-            var labels = new Label[]
-            {
-                new Label
-                {
-                    Name = "Physics"
-                },
-                new Label
-                {
-                    Name = "Mathematics"
-                }
-            };
-
-            foreach (var author in authors)
-            {
-                context.Authors.Add(author);
-            }
-
-            foreach (var label in labels)
-            {
-                context.Labels.Add(label);
-            }
+            context.Authors.AddRange(authors);
 
             context.SaveChanges();
         }

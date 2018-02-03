@@ -24,7 +24,6 @@
     <None Remove="wwwroot\node_modules\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels" />
     <Folder Include="wwwroot\scripts" />
   </ItemGroup>
 </Project>
