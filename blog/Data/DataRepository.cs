@@ -79,17 +79,17 @@ namespace blog.Data
 
     
         // Update
-        public void UpdatePost(JsonPost post)
+        public void UpdatePost(Post post)
         {
-            var postToUpdate = _context.Posts.FirstOrDefault(p => p.PostId == post.Id);
+            var postToUpdate = _context.Posts.FirstOrDefault(p => p.PostId == post.PostId);
             postToUpdate.Title = post.Title;
             postToUpdate.Content = post.Content;
             _context.SaveChanges();
         }
         
-        public void UpdateAuthor(JsonAuthor author)
+        public void UpdateAuthor(Author author)
         {
-            var authorToUpdate = _context.Authors.FirstOrDefault(auth => auth.AuthorId == author.Id);
+            var authorToUpdate = _context.Authors.FirstOrDefault(auth => auth.AuthorId == author.AuthorId);
             authorToUpdate.Name = author.Name;
             authorToUpdate.Email = author.Email;
             authorToUpdate.Details = author.Details;

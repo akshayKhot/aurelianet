@@ -1,10 +1,18 @@
+import {BlogService} from "./Services/blog-service";
+
 export class about {
+
+    constructor(blogService) {
+        this.blogService = blogService;
+    }
+
+    static inject() {
+        return [BlogService];
+    }
+    
     activate() {
-        $.ajax({
-            url: "http://localhost:5000/about",
-            method: "GET"
-        })
-            .done(data => {
+        this.blogService.getAuthor(1)
+            .then(data => {
                 this.author = data;
             });
     }

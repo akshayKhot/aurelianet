@@ -76,14 +76,14 @@ namespace blog.Controllers
         
         // Update
         [HttpPut("/posts")]
-        public IActionResult UpdatePost([FromBody] JsonPost post)
+        public IActionResult UpdatePost([FromBody] Post post)
         {
             _repository.UpdatePost(post);
             return Content("success");
         }
         
         [HttpPut("/authors")]
-        public IActionResult UpdateAuthor([FromBody] JsonAuthor author)
+        public IActionResult UpdateAuthor([FromBody] Author author)
         {
             _repository.UpdateAuthor(author);
             return Content("success");

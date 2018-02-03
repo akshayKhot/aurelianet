@@ -19,8 +19,8 @@ namespace blog.Data
         IEnumerable<Post> GetAllPostsForAuthor(int id);
         
         // Update
-        void UpdatePost(JsonPost post);
-        void UpdateAuthor(JsonAuthor author);
+        void UpdatePost(Post post);
+        void UpdateAuthor(Author author);
 
         // Delete
         void DeletePost(int id);

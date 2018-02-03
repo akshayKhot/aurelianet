@@ -17,7 +17,7 @@ export class home {
     }
     
     deletePost(post) {
-        this.blogService.deletePost(post).then(() => {
+        this.blogService.deletePost(post.postId).then(() => {
             this.getPosts();
         });
     }
@@ -29,6 +29,6 @@ export class home {
     }
     
     updatePost(post) {
-        this.router.navigateToRoute("update", { id: post.id });
+        this.router.navigateToRoute("update", { id: post.postId });
     }
 }
